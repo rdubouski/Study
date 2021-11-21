@@ -1,4 +1,6 @@
-public class U1_L2 {
+package Unit1;
+
+public class Example2 {
     public static void main(String[] args) {
         int var1;
         int var2;

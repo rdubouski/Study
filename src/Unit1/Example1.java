@@ -1,5 +1,9 @@
-public class U1_L1 {
+package Unit1;
+
+public class Example1 {
+
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
+
 }
