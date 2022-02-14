@@ -16,10 +16,13 @@ class Player {
     }
 
     public void run() {
-        if (this.stamina > MIN_STAMINA) {
-            this.stamina = this.stamina - 1;
+        if (stamina == 0) {
+            return;
         }
-        if (this.stamina == 0) {
+        if (stamina > MIN_STAMINA) {
+            stamina = stamina - 1;
+        }
+        if (stamina == 0) {
             countPlayers--;
         }
     }
@@ -51,6 +54,7 @@ public class Task2 {
         while (p6.getStamina() != 0){
             p6.run();
         }
+        p6.run();
         Player.info();
 
         Player p9 = new Player(98);
