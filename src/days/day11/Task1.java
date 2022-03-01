@@ -1,86 +1,136 @@
 package days.day11;
 
 class Warehouse {
-    private static int countOrder;
-    private static int balance;
+    private int countOrder;
+    private int balance;
 
-    public static int getCountOrder() {
+    public int getCountOrder() {
         return countOrder;
     }
 
-    public static void setCountOrder(int countOrder) {
-        countOrder = countOrder;
+    public void setCountOrder(int countOrder) {
+        this.countOrder = countOrder;
     }
 
-    public static int getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public static void setBalance(int balance) {
-        balance = balance;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
+    @Override
     public String toString() {
-        return ("Count = " + countOrder + " balance = " + balance);
+        return "Warehouse{" +
+                "countOrder=" + countOrder +
+                ", balance=" + balance +
+                '}';
     }
 }
 
 class Picker implements Worker {
     private int salary;
+    private final Warehouse warehouse;
+
+    public Picker(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
 
     public int getSalary() {
         return salary;
     }
 
-    private int counter;
     @Override
     public void doWork() {
-        counter++;
         salary += 80;
-        Warehouse.setCountOrder(Warehouse.getCountOrder() + 1);
-        if (counter == 1500) {
-            counter = 0;
-            bonus();
-        }
+        warehouse.setCountOrder(warehouse.getCountOrder() + 1);
+        if (warehouse.getCountOrder() % 1500 ==0) bonus();
     }
 
     @Override
     public void bonus() {
         salary *= 3;
     }
+
+    @Override
+    public String toString() {
+        return "Picker{" +
+                "salary=" + salary +
+                '}';
+    }
 }
 
 class Courier implements Worker {
     private int salary;
+    private final Warehouse warehouse;
+
+    public Courier(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
 
     public int getSalary() {
         return salary;
     }
 
-    private int counter;
     @Override
     public void doWork() {
-        counter += 1000;
         salary = salary + 100;
-        Warehouse.setBalance(Warehouse.getBalance() + 1000);
+        warehouse.setBalance(warehouse.getBalance() + 1000);
+        if (warehouse.getBalance() % 1000000 == 0) bonus();
     }
 
     @Override
     public void bonus() {
-        if (counter == 1000000) {
-            counter = 0;
-            salary *= 2;
-        }
+        salary *= 2;
+    }
+
+    @Override
+    public String toString() {
+        return "Courier{" +
+                "salary=" + salary +
+                '}';
     }
 }
 
 interface Worker {
-    public void doWork();
-    public void bonus();
+    void doWork();
+    void bonus();
 }
 
 public class Task1 {
     public static void main(String[] args) {
+        Warehouse warehouse = new Warehouse();
+        Picker picker = new Picker(warehouse);
+        Courier courier = new Courier(warehouse);
+        System.out.println(warehouse + " " + picker + " " + courier);
+
+        picker.doWork();
+        courier.doWork();
+        System.out.println(warehouse + " " + picker + " " + courier);
+
+        for (int i = 0; i < 1500; i++) {
+            picker.doWork();
+            courier.doWork();
+        }
+        System.out.println(warehouse + " " + picker + " " + courier);
+
+        for (int i = 0; i < 1500; i++) {
+            picker.doWork();
+            courier.doWork();
+        }
+        System.out.println(warehouse + " " + picker + " " + courier);
+
+        Warehouse warehouse2 = new Warehouse();
+        Picker picker2 = new Picker(warehouse2);
+        Courier courier2 = new Courier(warehouse2);
+        System.out.println(warehouse2 + " " + picker2 + " " + courier2);
+
+        picker2.doWork();
+        courier2.doWork();
+        System.out.println(warehouse2 + " " + picker2 + " " + courier2);
+        
+        System.out.println(warehouse + " " + picker + " " + courier);
 
     }
 }
